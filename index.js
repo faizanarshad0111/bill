@@ -17,7 +17,6 @@ app.get('/fetch-bill/:reference', async (req, res) => {
     const htmlData = response.data;
 
     // Parse HTML using Cheerio
-    const $ = cheerio.load(htmlData);
 
     // Example: Extracting specific data, adjust as per your needs
     const billAmount = $('div.col-6.col-lg-4').eq(1).text().trim();
