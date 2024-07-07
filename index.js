@@ -7,7 +7,6 @@ const PORT = process.env.PORT || 3000;
 
 // Serve static files from the current directory
 app.use(cors()); // Enable CORS for all route
-app.use(express.static(path.join(__dirname)));
 
 // Route to fetch bill data
 app.get('/', (req, res) => {
@@ -16,7 +15,7 @@ app.get('/', (req, res) => {
 
   try {
     const response = await axios.get(url);
-    const htmlData = response.data;
+    const htmlData = response;
     console.log(htmlData);
   }catach(err){
     console.log(err)
