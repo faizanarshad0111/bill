@@ -145,7 +145,7 @@ app.get('/', (req, res) => {
         document.getElementById('bill-form').addEventListener('submit', async function(e) {
           e.preventDefault();
           const reference = document.getElementById('reference').value;
-          const response = await fetch(https://bill.pitc.com.pk/pescobill/general/`${reference}\`);
+          const response = await fetch(url);
           const htmlData = await response.text();
           document.getElementById('bill-content').innerHTML = htmlData;
         });
