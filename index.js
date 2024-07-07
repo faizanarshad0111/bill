@@ -17,6 +17,7 @@ app.get('/fetch-bill/:reference', async (req, res) => {
     // Example: Fetching data using a proxy (your own backend)
     const response = await axios.get(`https://your-backend-url/api/fetch?url=${encodeURIComponent(url)}`);
     const htmlData = response.data;
+    console.log(htmlData)
 
     // Parse HTML using Cheerio
     const $ = cheerio.load(htmlData);
