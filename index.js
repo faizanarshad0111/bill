@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
   try {
     const response = await axios.get(url);
     const htmlData = response;
-    console.log(htmlData);
+    console.log(htmlData.data);
   }catach(err){
     console.log(err)
   }
