@@ -1,6 +1,6 @@
 const express = require('express');
 const axios = require('axios');
-const cheerio = require('cheerio');
+const cheerio = require('cheerio'); // For parsing HTML
 const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,16 +14,14 @@ app.get('/fetch-bill/:reference', async (req, res) => {
   const url = `https://bill.pitc.com.pk/pescobill/general/${referenceNumber}`;
 
   try {
-    // Example: Fetching data using a proxy (your own backend)
-    const response = await axios.get(`https://your-backend-url/api/fetch?url=${encodeURIComponent(url)}`);
+    const response = await axios.get(url);
     const htmlData = response.data;
-    console.log(htmlData)
 
     // Parse HTML using Cheerio
     const $ = cheerio.load(htmlData);
 
     // Example: Extracting specific data, adjust as per your needs
-    const billAmount = $('div.bill-amount').text().trim();
+    const billAmount = $('div.col-6.col-lg-4').eq(1).text().trim();
     const billDetails = $('div.bill-details').html(); // Using .html() to get inner HTML
 
     // Construct the HTML to send back
@@ -35,8 +33,7 @@ app.get('/fetch-bill/:reference', async (req, res) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Bill Details</title>
         <style>
-          /* Include CSS styles from the original page or define your own */
-          /* Example styles to match the structure */
+          /* CSS styles matching the target page */
           body {
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
@@ -52,30 +49,56 @@ app.get('/fetch-bill/:reference', async (req, res) => {
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
           }
           .bill-header {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px;
+            background-color: #f8f9fa;
+            padding: 15px 20px;
             text-align: center;
             margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+          }
+          .bill-header h1 {
+            color: #007bff;
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 0;
           }
           .bill-details {
             background-color: #fff;
             padding: 20px;
-            border: 1px solid #ddd;
             margin-bottom: 20px;
+            border: 1px solid #e9ecef;
           }
           .bill-details h2 {
-            font-size: 1.5em;
-            color: #333;
+            font-size: 1.4em;
+            color: #007bff;
+            margin-bottom: 15px;
           }
           .bill-details p {
             font-size: 1.1em;
             color: #555;
+            margin-bottom: 10px;
           }
           .bill-amount {
             font-size: 1.5em;
             font-weight: bold;
             color: #007bff;
+          }
+          .bill-table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            border: 1px solid #ddd;
+          }
+          .bill-table th, .bill-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+          }
+          .bill-table th {
+            background-color: #f8f9fa;
+            color: #333;
+          }
+          .bill-table td {
+            color: #555;
           }
         </style>
       </head>
