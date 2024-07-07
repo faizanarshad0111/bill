@@ -28,7 +28,6 @@ app.get('/fetch-bill/:reference', async (req, res) => {
 
     // Construct the HTML to send back
     const formattedHtml = `
-      <!DOCTYPE html>
       <html lang="en">
       <head>
         <meta charset="UTF-8">
@@ -131,7 +130,6 @@ app.get('/fetch-bill/:reference', async (req, res) => {
 // Serve the HTML form
 app.get('/', (req, res) => {
   res.send(`
-    <!DOCTYPE html>
     <html lang="en">
     <head>
       <meta charset="UTF-8">
